@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dfd9833-6b02-48c2-8518-619ae169656d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/EnergyGenerator.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ModuleAction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/OutpostModule.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ResearchLab.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interface.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interface.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EnergyGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/EnergyGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hero.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/Hero.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Interface.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/example/Interface.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ModuleAction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/ModuleAction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OutpostModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/OutpostModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OutpostWorker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/OutpostWorker.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ResearchLab.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/ResearchLab.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Test.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/example/Test.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +67,16 @@
     "settings.editor.selected.configurable": "File.Encoding"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Чулки\Kotlin\Kotlin_Advanced_Lab_9_10_SHAPKIN_N_A\src\example" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="modules" />
+      <recent name="characters" />
+      <recent name="actions" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

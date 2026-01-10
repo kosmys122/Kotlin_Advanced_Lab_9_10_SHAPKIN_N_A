@@ -1,4 +1,4 @@
-import java.lang.classfile.MethodModel
+package example
 
 interface Movable{
     var speed:Int
@@ -12,7 +12,7 @@ interface Movable{
 class Car(
     override var model: String,
     override val number: String
-) : Movable{
+) : Movable {
     override var speed=60
     override fun move(){
         println("Едем на машине со скоростью $speed км/ч")
@@ -21,14 +21,14 @@ class Car(
 class Aircraft(
     override var model: String,
     override val number:String
-):Movable{
+): Movable {
     override var speed=600
     override fun move(){
         println("Летим на самолёте со скоростью $speed км/ч")
     }
     override fun stop()= println("Приземляемся...")
 }
-fun travel(obj:Movable)=obj.move()
+fun travel(obj: Movable)=obj.move()
 fun main(){
 //    val car=Car()
 //    val aircraft=Aircraft()
@@ -45,7 +45,7 @@ fun main(){
 //    aircraft.stop()
 //    val car=Car("LADA","123LAD")
 //    val aircraft=Aircraft("Boeing","737")
-    val player=MediaPlayer()
+    val player= MediaPlayer()
     player.play()
 }
 interface Worker{
@@ -54,7 +54,7 @@ interface Worker{
 interface Student{
     fun study()
 }
-class WorkingStudent(val name:String):Worker,Student{
+class WorkingStudent(val name:String): Worker, Student {
     override fun work()= println("$name работает")
     override fun study()= println("$name учится")
 }
@@ -64,7 +64,7 @@ interface VideoPlayable{
 interface AudioPlayable{
     fun play()= println("Play audio")
 }
-class MediaPlayer:VideoPlayable,AudioPlayable{
+class MediaPlayer: VideoPlayable, AudioPlayable {
     override fun play(){
         println("Start playing")
         super<VideoPlayable>.play()
