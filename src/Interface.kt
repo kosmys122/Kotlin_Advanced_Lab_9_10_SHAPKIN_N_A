@@ -10,7 +10,7 @@ interface Movable{
     }
 }
 class Car(
-    override val model: String,
+    override var model: String,
     override val number: String
 ) : Movable{
     override var speed=60
@@ -19,7 +19,7 @@ class Car(
     }
 }
 class Aircraft(
-    override val model: String,
+    override var model: String,
     override val number:String
 ):Movable{
     override var speed=600
