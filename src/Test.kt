@@ -10,10 +10,22 @@ fun main(){
 //    println(age)
 //    age=-345
 //    println(age)
-    val hero=Hero("Утер")
-    hero.health=150
-    println(hero.health)
-    println(hero.stamina)
-    //hero.level=10
-    hero.leverUp()
+//    val hero=Hero("Утер")
+//    hero.health=150
+//    println(hero.health)
+//    println(hero.stamina)
+//    //hero.level=10
+//    hero.leverUp()
+    val worker=OutpostWorker("Алексей")
+    println("Энергия: ${worker.energy}")
+    println("Настроение: ${worker.mood}")
+    worker.work()
+    worker.work()
+    worker.work()
+    println("Энергия ${worker.energy}")
+    println("Настроение ${worker.mood}")
+    worker.rest()
+    worker.energy=150
+    //worker.level=5
+    worker.levelUp()
 }
