@@ -16,8 +16,8 @@ fun main(){
     println("\nГерой пытается использовать способность:")
     println("Способность: ${hero.ultimate}")
 
-    println(\n)
-    println(${hero.ultimate})
+    println("\nПовторный вызов способности (должна быть мгновенной):")
+    println("Способность: ${hero.ultimate}")
 
     println("\nМеняем имя героя:")
     hero.name="Тёмный Паладин"
