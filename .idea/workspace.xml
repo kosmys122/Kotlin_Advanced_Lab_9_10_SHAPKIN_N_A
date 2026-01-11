@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dfd9833-6b02-48c2-8518-619ae169656d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/modules/ModuleResult.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/EnergyGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/EnergyGenerator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/OutpostModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/OutpostModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/ResearchLab.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/ResearchLab.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/payment/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/payment/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

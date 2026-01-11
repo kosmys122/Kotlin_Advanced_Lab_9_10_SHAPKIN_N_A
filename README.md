@@ -176,3 +176,91 @@ fun main() {
     button.drag()  // Кнопка перемещена
     button.show()  // Выведет оба сообщения из интерфейсов
 }
+
+
+
+
+
+## Sealed-классы
+
+**Sealed-классы** используются для представления ограниченного набора состояний или результатов, которые известны на этапе компиляции. Они позволяют:
+
+- гарантировать обработку всех возможных вариантов;
+- безопасно использовать конструкцию `when` без `else`;
+- удобно описывать состояния, события и результаты действий.
+
+### Пример: результат работы модуля
+
+```kotlin
+sealed class ModuleResult {
+    data class Success(val message: String) : ModuleResult()
+    data class ResourceProduced(val resourceName: String, val amount: Int) : ModuleResult()
+    data class NotEnoughResources(
+        val resourceName: String,
+        val required: Int,
+        val available: Int
+    ) : ModuleResult()
+    data class Error(val reason: String) : ModuleResult()
+}
+```
+## Использование sealed-классов:
+```kotlin
+fun handleResult(result: ModuleResult) {
+    when (result) {
+        is ModuleResult.Success -> println(result.message)
+        is ModuleResult.ResourceProduced -> println("Произведено: ${result.amount} ${result.resourceName}")
+        is ModuleResult.NotEnoughResources -> println("Не хватает ${result.resourceName}")
+        is ModuleResult.Error -> println("Ошибка: ${result.reason}")
+    }
+}
+```
+Object в Kotlin
+object — это специальная конструкция Kotlin, которая создаёт единственный экземпляр класса (Singleton). Особенности:
+
+создаётся при первом обращении;
+
+существует в одном экземпляре;
+
+не имеет конструктора.
+
+Пример: глобальный логгер
+```kotlin
+object Logger {
+    private var counter = 0
+
+    fun log(message: String) {
+        counter++
+        println("[$counter] $message")
+    }
+}
+```
+Использование:
+kotlin
+Logger.log("Инициализация системы")
+Logger.log("Модуль запущен")
+object удобно использовать для:
+
+логгеров;
+
+конфигураций;
+
+состояний без данных в sealed-классах;
+
+утилитарных классов.
+
+Дополнительный пример: конфигурация приложения
+```kotlin
+object AppConfig {
+    const val APP_NAME = "Galaxy Outpost Manager"
+    const val VERSION = "1.0.0"
+    var debugMode = true
+
+    fun getApiUrl(): String {
+        return if (debugMode) "http://localhost:8080" else "https://api.galaxy.outpost"
+    }
+}
+```
+```kotlin
+println(AppConfig.APP_NAME)  // Galaxy Outpost Manager
+println(AppConfig.getApiUrl()) // http://localhost:8080
+```
