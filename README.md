@@ -264,3 +264,278 @@ object AppConfig {
 println(AppConfig.APP_NAME)  // Galaxy Outpost Manager
 println(AppConfig.getApiUrl()) // http://localhost:8080
 ```
+
+## Делегирование свойств
+Делегирование свойств позволяет передать логику хранения и обработки значения другому объекту. В Kotlin это реализуется с помощью ключевого слова by.
+
+Преимущества:
+
+Уменьшение дублирования кода
+
+Централизованная логика проверки и обработки данных
+
+Более чистый и читаемый код
+
+Примеры применения:
+```kotlin
+kotlin
+import kotlin.properties.Delegates
+
+// Пример 1: Валидация значений с помощью делегирования
+class Spaceship {
+var health: Int by Delegates.vetoable(100) { _, _, newValue ->
+newValue in 0..100 // Разрешаем только значения от 0 до 100
+}
+
+    var shield: Int by Delegates.observable(0) { property, oldValue, newValue ->
+        println("${property.name} изменился: $oldValue ? $newValue")
+    }
+}
+
+// Пример 2: Делегирование с пользовательским классом
+class RangeDelegate(
+private var value: Int,
+private val min: Int,
+private val max: Int
+) {
+operator fun getValue(thisRef: Any?, property: kotlin.reflect.KProperty<*>): Int {
+return value
+}
+
+    operator fun setValue(thisRef: Any?, property: kotlin.reflect.KProperty<*>, newValue: Int) {
+        value = newValue.coerceIn(min, max)
+        println("Установлено значение $value в диапазоне [$min, $max]")
+    }
+}
+
+class ResourceStorage {
+var energy: Int by RangeDelegate(100, 0, 1000)
+var fuel: Int by RangeDelegate(50, 0, 500)
+}
+```
+## Lazy (ленивая инициализация)
+lazy позволяет инициализировать объект только при первом обращении к нему.
+
+Когда использовать:
+
+Объект создаётся не всегда
+
+Его создание ресурсоёмкое
+
+Нужно отложить инициализацию
+
+Примеры применения:
+```kotlin
+kotlin
+// Пример 1: Базовое использование
+class GalaxyMap {
+val starSystems by lazy {
+println("Загрузка карты галактики...")
+loadStarSystemsFromDatabase() // Тяжёлая операция
+}
+
+    private fun loadStarSystemsFromDatabase(): List<StarSystem> {
+        // Симуляция загрузки данных
+        Thread.sleep(2000)
+        return listOf(StarSystem("Солнечная"), StarSystem("Альфа Центавра"))
+    }
+}
+
+// Пример 2: Lazy с потокобезопасностью
+class ResourceManager {
+// Потокобезопасная инициализация
+val expensiveResource by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+ExpensiveResource()
+}
+
+    // Непотокобезопасная, но более быстрая инициализация
+    val cachedConfig by lazy(LazyThreadSafetyMode.NONE) {
+        loadConfiguration()
+    }
+    
+    // Публикация через LazyThreadSafetyMode.PUBLICATION
+    val sharedResource by lazy(LazyThreadSafetyMode.PUBLICATION) {
+        SharedResource()
+    }
+}
+
+// Пример 3: Ленивая инициализация с параметрами
+class SpaceStation {
+private val stationName: String = "Альфа"
+
+    val dockingBay by lazy { 
+        DockingBay(stationName, capacity = 10)
+    }
+    
+    val energyGrid by lazy {
+        EnergyGrid(maxCapacity = 10000)
+    }
+}
+```
+## Observer-паттерн (наблюдатель)
+Observer-паттерн позволяет объектам реактировать на изменения состояния другого объекта.
+
+Применение в проекте:
+
+Реагирование на изменение ресурсов
+
+Логирование событий
+
+Уведомление пользователя
+
+Примеры реализации:
+```kotlin
+kotlin
+import kotlin.properties.Delegates
+
+// Пример 1: Использование Delegates.observable
+class ResourceManager {
+var minerals: Int by Delegates.observable(0) { _, old, new ->
+onResourceChanged("minerals", old, new)
+}
+
+    var energy: Int by Delegates.observable(100) { _, old, new ->
+        onResourceChanged("energy", old, new)
+    }
+    
+    private val observers = mutableListOf<ResourceObserver>()
+    
+    fun addObserver(observer: ResourceObserver) {
+        observers.add(observer)
+    }
+    
+    private fun onResourceChanged(resource: String, oldValue: Int, newValue: Int) {
+        observers.forEach { it.onResourceChanged(resource, oldValue, newValue) }
+    }
+}
+
+interface ResourceObserver {
+fun onResourceChanged(resource: String, oldValue: Int, newValue: Int)
+}
+
+// Пример 2: Кастомная реализация Observer
+class ObservableProperty<T>(
+initialValue: T,
+private val onChange: (oldValue: T, newValue: T) -> Unit
+) {
+private var value: T = initialValue
+
+    fun get(): T = value
+    
+    fun set(newValue: T) {
+        val oldValue = value
+        value = newValue
+        onChange(oldValue, newValue)
+    }
+}
+
+class Spacecraft {
+private val _health = ObservableProperty(100) { old, new ->
+println("Здоровье изменилось: $old ? $new")
+if (new < 30) {
+println("Внимание: низкий уровень здоровья!")
+}
+}
+
+    val health: Int get() = _health.get()
+    fun setHealth(value: Int) = _health.set(value)
+}
+
+// Пример 3: Расширенный Observer с поддержкой нескольких типов событий
+class GameEventManager {
+private val eventListeners = mutableMapOf<String, MutableList<(Any) -> Unit>>()
+
+    fun addListener(eventType: String, listener: (Any) -> Unit) {
+        eventListeners.getOrPut(eventType) { mutableListOf() }.add(listener)
+    }
+    
+    fun notify(eventType: String, data: Any) {
+        eventListeners[eventType]?.forEach { listener ->
+            listener(data)
+        }
+    }
+}
+
+class GameUI {
+init {
+val eventManager = GameEventManager()
+
+        eventManager.addListener("RESOURCE_CHANGE") { data ->
+            println("Изменены ресурсы: $data")
+        }
+        
+        eventManager.addListener("ALERT") { data ->
+            println("ТРЕВОГА: $data")
+        }
+    }
+}
+```
+## Сохранение состояния
+Для сохранения состояния проекта используется сериализация в JSON.
+
+Преимущества:
+
+Сохранение данных между запусками программы
+
+Хранение состояния в человекочитаемом формате
+
+Легко перенести логику в Android-приложение
+
+Пример реализации:
+```kotlin
+kotlin
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
+import java.io.File
+
+@Serializable
+data class GameState(
+val playerName: String,
+val resources: Map<String, Int>,
+val discoveredSystems: List<String>,
+val currentStation: String,
+val timestamp: Long = System.currentTimeMillis()
+)
+
+class SaveManager {
+private val json = Json { prettyPrint = true }
+
+    fun saveGame(state: GameState, filename: String = "savegame.json") {
+        val jsonString = json.encodeToString(state)
+        File(filename).writeText(jsonString)
+        println("Игра сохранена в $filename")
+    }
+    
+    fun loadGame(filename: String = "savegame.json"): GameState? {
+        return try {
+            val jsonString = File(filename).readText()
+            json.decodeFromString<GameState>(jsonString)
+        } catch (e: Exception) {
+            println("Ошибка загрузки: ${e.message}")
+            null
+        }
+    }
+}
+
+// Пример использования
+fun main() {
+val saveManager = SaveManager()
+
+    // Сохранение
+    val gameState = GameState(
+        playerName = "Командир Шепард",
+        resources = mapOf("minerals" to 1500, "energy" to 750, "fuel" to 300),
+        discoveredSystems = listOf("Солнечная система", "Альфа Центавра"),
+        currentStation = "Цитадель"
+    )
+    
+    saveManager.saveGame(gameState)
+    
+    // Загрузка
+    val loadedState = saveManager.loadGame()
+    loadedState?.let {
+        println("Загружен игрок: ${it.playerName}")
+        println("Ресурсы: ${it.resources}")
+    }
+}
+```
